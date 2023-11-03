@@ -1,0 +1,248 @@
+version: '3'
+# Docker Compose for GlobalEntry Network Infrastructure
+services:
+  NordNet-1:
+    image: ghcr.io/bubuntux/nordvpn
+    container_name: NordNet-1
+    cap_add:
+      - NET_ADMIN
+    sysctls:
+      - net.ipv4.conf.all.src_valid_mark=1
+      - net.ipv6.conf.all.disable_ipv6=1
+    ports:
+      - "50000:8080" # QBitorrent
+      - "50001:7878" # 
+      - "50002:8989" # 
+      - "50003:9117" # 
+      - "50004:9696" # 
+      - "50005:9091" #
+      - "50006:4444" #
+      - "50007:8181" #
+      - "50008:6767" # Bazarr
+      - "50009:1080" # SOCKS Proxy Switzerland
+      - "50010:5055" #
+      - "50011:8265" #
+      - "50012:8266" #
+      - "50013:8267" #
+      - "50014:8268" #
+      - "50015:8269" #
+      - "50016:8270" #
+      - "50017:8271" #
+      - "50018:8272" #
+      - "50019:8273" #
+      - "50020:8274" #
+      - "50021:8275" #
+      - "50022:8276" #
+      - "50023:8277" #
+      - "50024:8278" #
+    environment:
+      - TOKEN=${NORDNET1_TOKEN}
+      - NETWORK=${NORDNET1_NETWORK}
+      - TECHNOLOGY=${NORDNET1_TECHNOLOGY}
+      - CONNECT=${NORDNET1_CONNECT}
+    restart: unless-stopped
+
+  NordNet-2:
+    image: ghcr.io/bubuntux/nordvpn
+    container_name: NordNet-2
+    cap_add:
+      - NET_ADMIN
+    sysctls:
+      - net.ipv4.conf.all.src_valid_mark=1
+      - net.ipv6.conf.all.disable_ipv6=1
+    ports:
+      - "50025:8080" # 
+      - "50026:7878" # Radarr
+      - "50027:8989" # Sonarr
+      - "50028:9117" # 
+      - "50029:9696" # Prowlarr
+      - "50030:9091" #
+      - "50031:4444" #
+      - "50032:5055" # Overseer
+      - "50033:8181" # Tautulli
+      - "50034:8265" #
+      - "50035:8266" #
+      - "50036:8267" #
+      - "50037:1080" # SOCKS Proxy
+      - "50038:8268" #
+      - "50039:8269" #
+      - "50040:8270" #
+      - "50041:8271" #
+      - "50042:8272" #
+      - "50043:8273" #
+      - "50044:8274" #
+      - "50045:8275" #
+      - "50046:8276" #
+      - "50047:8277" #
+      - "50048:8278" #
+
+    environment:
+      - TOKEN=${NORDNET2_TOKEN}
+      - NETWORK=${NORDNET2_NETWORK}
+      - TECHNOLOGY=${NORDNET2_TECHNOLOGY}
+      - CONNECT=${NORDNET2_CONNECT}
+    restart: unless-stopped
+
+  NordNet-3:
+    image: ghcr.io/bubuntux/nordvpn
+    container_name: NordNet-3
+    cap_add:
+      - NET_ADMIN
+    sysctls:
+      - net.ipv4.conf.all.src_valid_mark=1
+      - net.ipv6.conf.all.disable_ipv6=1
+    ports:
+      - "50025:8080" # 
+      - "50026:7878" #
+      - "50027:8989" #
+      - "50028:9117" # 
+      - "50029:9696" #
+      - "50030:9091" #
+      - "50031:4444" #
+      - "50032:5055" #
+      - "50033:8181" # 
+      - "50034:8265" #
+      - "50035:8266" #
+      - "50036:8267" #
+      - "50037:1080" # SOCKS
+      - "50038:8268" #
+      - "50039:8269" #
+      - "50040:8270" #
+      - "50041:8271" #
+      - "50042:8272" #
+      - "50043:8273" #
+      - "50044:8274" #
+      - "50045:8275" #
+      - "50046:8276" #
+      - "50047:8277" #
+      - "50048:8278" #
+    environment:
+      - TOKEN=${NORDNET3_TOKEN}
+      - NETWORK=${NORDNET3_NETWORK}
+      - TECHNOLOGY=${NORDNET3_TECHNOLOGY}
+      - CONNECT=${NORDNET3_CONNECT}
+    restart: unless-stopped
+
+  Galactic-Tor:
+    image: thetorproject/obfs4-bridge:latest
+    container_name: Galactic-Tor
+    network_mode: "host"
+    user: "${PUID}:${PGID}"
+    volumes:
+      - "${TOR_CONFIG_PATH}/data:/var/lib/tor"
+      - "${TOR_CONFIG_PATH}/torrc:/etc/tor/torrc"
+      - "${TOR_CONFIG_PATH}/Keys:/var/lib/tor/keys"
+      - "${TOR_CONFIG_PATH}/Logs:/var/log/tor"
+      - "${TOR_CONFIG_PATH}/HiddenService:/var/lib/tor/hidden_service"
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TIMEZONE}
+    command: tor -f /etc/tor/torrc
+    restart: unless-stopped
+
+  Galactic-Adguard:
+    image: adguard/adguardhome
+    container_name: Galactic-Adguard
+    volumes:
+      - "${ADGUARD_WORK_DIR}:/work"
+      - "${ADGUARD_CONF_DIR}:/conf"
+    environment:
+      - TZ=${TIMEZONE}
+      - PUID=${PUID}
+      - PGID=${PGID}
+    restart: unless-stopped
+    network_mode: host
+
+  
+  Galactic-MTProto:
+    image: telegrammessenger/proxy:latest
+    container_name: Galactic-MTProto
+    restart: always
+    ports:
+      - "8443:443" # proxy
+      - "2398:2398" # statistics
+    environment:
+      - TAG=${MT_PROTO_TAG}
+      - SECRET=${MT_PROTO_SECRET}
+      - TZ=${TIMEZONE}
+    volumes:
+      - "${MT_PROTO_CONFIG_DIR}:/data"
+    network_mode: "bridge"
+  
+  Galactic-GDDNS:
+    image: alpine:latest
+    container_name: Galactic-GDDNS
+    volumes:
+      - ${GOOGLE_DDNS_CONFIG_PATH}/google-ddns.sh:/google-ddns.sh
+      - ${GOOGLE_DDNS_CONFIG_PATH}/last_ip.txt:/last_ip.txt
+    environment:
+      - TZ=${TIMEZONE}
+      - PGID=${PGID}
+      - PUID=${PUID}
+    restart: unless-stopped
+    command: >
+      /bin/sh -c "apk --no-cache add curl && while true; do
+      /bin/sh /google-ddns.sh && sleep 300; done"
+
+  Galactic-CloudFlare:
+    image: oznu/cloudflare-ddns
+    container_name: Galactic-CloudFlare
+    environment:
+      - ZONE=${CLOUDFLARE_ZONE}
+      - EMAIL=${CLOUDFLARE_EMAIL}
+      - API_KEY=${CLOUDFLARE_API_KEY}
+      - PROXIED=${CLOUDFLARE_PROXIED}
+      - TZ=${TIMEZONE}
+      - CF_API=${CLOUDFLARE_API_URL}
+      - RRTYPE=${CLOUDFLARE_RRTYPE}
+      - CRON=${CLOUDFLARE_CRON}
+    restart: unless-stopped
+  
+  Galactic-ShadowSocks:
+    image: shadowsocks/shadowsocks-libev
+    container_name: Galactic-ShadowSocks
+    ports:
+      - "8388:8388/tcp"
+      - "8388:8388/udp"
+    environment:
+      - METHOD=${SHADOWSOCKS_METHOD}
+      - PASSWORD=${SHADOWSOCKS_PASSWORD}
+      - TIMEOUT=${SHADOWSOCKS_TIMEOUT}
+      - DNS_ADDRS=${SHADOWSOCKS_DNS_ADDRS}
+    restart: unless-stopped
+    network_mode: bridge
+
+  Galactic-Socks-Switzerland:
+    image: serjs/go-socks5-proxy
+    container_name: Galactic-Socks-Switzerland
+    network_mode: "container:NordNet-1"
+    environment:
+      - PROXY_USER=${SOCKS_USER}
+      - PROXY_PASSWORD=${SOCKS_PASSWORD}
+    restart: always
+
+  Galactic-Socks-Canada:
+    image: serjs/go-socks5-proxy
+    container_name: Galactic-Socks-Canada
+    network_mode: "container:NordNet-2"
+    environment:
+      - PROXY_USER=${SOCKS_USER}
+      - PROXY_PASSWORD=${SOCKS_PASSWORD}
+    restart: always
+
+  Galactic-Socks-Japan:
+    image: serjs/go-socks5-proxy
+    container_name: Galactic-Socks-Japan
+    network_mode: "container:NordNet-3"
+    environment:
+      - PROXY_USER=${SOCKS_USER}
+      - PROXY_PASSWORD=${SOCKS_PASSWORD}
+    restart: always
+
+  watchtower:
+    image: containrrr/watchtower
+    container_name: GlobeNet-Watchtower
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    restart: unless-stopped

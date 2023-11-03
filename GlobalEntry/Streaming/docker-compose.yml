@@ -1,0 +1,180 @@
+version: '3'
+# Docker Compose for GlobalEntry Streaming Services
+services:
+
+  Galactic-Tautulli:
+    image: linuxserver/tautulli
+    container_name: Galactic-Tautulli
+    network_mode: "container:NordNet-2"
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TIMEZONE}
+    volumes:
+      - ${TAUTULLI_CONFIG}:/config
+    restart: unless-stopped
+ 
+  Galactic-Bazarr:
+    image: linuxserver/bazarr
+    container_name: Galactic-Bazarr
+    network_mode: "container:NordNet-2"
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TIMEZONE}
+    volumes:
+      - ${BAZARR_CONFIG}:/config
+      - ${MEDIA_DIR_1}:/21TB
+      - ${MEDIA_DIR_2}:/20TB
+      - ${DOWNLOADS}:/downloads
+      - ${TORRENT_COMPLETE}:/complete
+    restart: unless-stopped
+
+  Galactic-QBT:
+    image: linuxserver/qbittorrent
+    container_name: Galactic-QBT
+    network_mode: "container:NordNet-1"
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TIMEZONE}
+    volumes:
+      - ${QBITTORRENT_CONFIG}:/config
+      - ${DOWNLOADS}:/downloads
+      - ${TORRENT_COMPLETE}:/complete
+
+  Galactic-Prowlarr:
+    image: linuxserver/prowlarr
+    container_name: Galactic-Prowlarr
+    network_mode: "container:NordNet-2"
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TIMEZONE}
+    volumes:
+      - ${PROWLARR_CONFIG}:/config
+
+  Galactic-Sonarr:
+    image: linuxserver/sonarr
+    container_name: Galactic-Sonarr
+    network_mode: "container:NordNet-2"
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TIMEZONE}
+    volumes:
+      - ${SONARR_CONFIG}:/config
+      - ${MEDIA_VOLUME_1}:/21TB
+      - ${MEDIA_VOLUME_2}:/20TB
+      - ${DOWNLOADS}:/downloads
+      - ${TORRENT_COMPLETE}:/complete
+
+  Galactic-Radarr:
+    image: linuxserver/radarr
+    container_name: Galactic-Radarr
+    network_mode: "container:NordNet-2"
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TIMEZONE}
+    volumes:
+      - ${RADARR_CONFIG}:/config
+      - ${MEDIA_VOLUME_1}:/21TB
+      - ${MEDIA_VOLUME_2}:/20TB
+      - ${DOWNLOADS}:/downloads
+      - ${TORRENT_COMPLETE}:/complete
+
+
+  Galactic-Overseerr:
+    image: linuxserver/overseerr:latest
+    container_name: Galactic-Overseerr
+    network_mode: "container:NordNet-2"
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Denver 
+    volumes:
+      - /home/globalentry/Config/Overseerr:/config  
+    restart: unless-stopped
+  
+  Galactic-Tdarr:
+    image: haveagitgat/tdarr
+    container_name: Galactic-Tdarr
+    network_mode: host
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TIMEZONE}
+      - WEB_UI_PORT=${TDARR_WEB_UI_PORT}
+      - SERVER_PORT=${TDARR_SERVER_PORT}
+      - NODE_PORT=${TDARR_NODE_PORT}
+    volumes:
+      - ${TDARR_CONFIGS}:/app/configs
+      - ${TDARR_SERVER}:/app/server
+      - ${MEDIA_VOLUME_1}:/media
+      - ${MEDIA_VOLUME_2}:/media2
+      - ${TDARR_CACHE}:/temp
+    restart: unless-stopped
+
+  Galactic-Plex:
+    image: linuxserver/plex
+    container_name: Galactic-Plex
+    network_mode: host
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TIMEZONE}
+      - TOKEN=${PLEX_CLAIM_TOKEN}
+    volumes:
+      - ${PLEX_CONFIG}:/config
+      - ${MEDIA_DIR_1}:/21TB
+      - ${MEDIA_DIR_2}:/20TB
+      - ${PLEX_TRANS}:/transcode
+    restart: unless-stopped
+
+  Galactic-Membarr:
+    image: yoruio/membarr
+    container_name: Galactic-Membarr
+    network_mode: "container:NordNet-3"
+    environment:
+      - TOKEN=${MEMBARR_TOKEN}
+      - TZ=${TIMEZONE}
+    volumes:
+      - ${MEMBARR_CONFIG}:/app/app/config
+    restart: unless-stopped
+  
+  openproject:
+    image: openproject/community:13.0.7
+    container_name: Galactic-OpenProject
+    volumes:
+      - ${OPENPROJECT_PGDATA}:/var/openproject/pgdata
+      - ${OPENPROJECT_STATIC}:/var/openproject/assets
+    environment:
+      - SECRET_KEY_BASE=${OPENPROJECT_SECRET_KEY_BASE}
+      - DATABASE_URL=postgres://${DB_USER}:${DB_PASS}@db/${DB_NAME}?encoding=utf8&pool=5&timeout=5000
+      - PGID=${PGID}
+      - PUID=${PUID}
+    depends_on:
+      - db
+    ports:
+      - "${OPENPROJECT_PORT}:80"
+    restart: unless-stopped
+
+  db:
+    image: postgres:10
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASS}
+      - POSTGRES_DB=${DB_NAME}
+      - PGID=${PGID}
+      - PUID=${PUID}
+    volumes:
+      - ${DB_DATA}:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  watchtower:
+    image: containrrr/watchtower
+    container_name: watchtower
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    restart: unless-stopped

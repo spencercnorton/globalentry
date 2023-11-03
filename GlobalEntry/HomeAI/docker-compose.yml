@@ -1,0 +1,34 @@
+version: '3'
+# Docker Compose for GlobalEntry Home Assistant Services
+services:
+  homeassistant:
+    container_name: Galactic-HomeAssistant
+    image: homeassistant/home-assistant:stable
+    volumes:
+      - "${HOMEASSISTANT_CONFIG_DIR}:/config"
+      - "/etc/localtime:/etc/localtime:ro"
+    environment:
+      - TZ=${TIMEZONE}
+    restart: unless-stopped
+    network_mode: host
+  
+  homebridge:
+    image: oznu/homebridge:latest
+    container_name: Galactic-HomeBridge
+    restart: always
+    network_mode: host
+    environment:
+      - HOMEBRIDGE_CONFIG_UI=1
+      - HOMEBRIDGE_CONFIG_UI_PORT=8581
+      - TZ=${TIMEZONE}
+      - PGID=${PGID}
+      - PUID=${PUID}
+    volumes:
+      - "${HOMEBRIDGE_CONFIG_DIR}:/homebridge"
+
+  watchtower:
+    image: containrrr/watchtower
+    container_name: watchtower
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    restart: unless-stopped

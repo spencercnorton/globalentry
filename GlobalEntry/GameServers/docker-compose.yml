@@ -1,0 +1,83 @@
+version: '3.9'
+Services:
+
+sons-of-the-forest-dedicated-server:
+    container_name: Galactic-SOTF
+    image: jammsen/sons-of-the-forest-dedicated-server:latest
+    restart: always
+    environment:
+      - ALWAYS_UPDATE_ON_START
+    ports:
+      - "8766:8766/udp"
+      - "27016:27016/udp"
+      - "9700:9700/udp"
+    volumes:
+      - ${STEAMCMD_VOLUME}:/steamcmd
+      - ${SOTF_VOLUME}:/sonsoftheforest
+      - ${WINE_VOLUME}:/winedata
+
+openrct2-server:
+    image: openrct2/openrct2-cli:develop
+    container_name: Galactic-OpenRCT2
+    ports:
+      - "11753:11753"
+    volumes:
+      - "${OPENRCT2_CONFIG_PATH}:/home/openrct2/.config/OpenRCT2"
+    command: host /home/openrct2/.config/OpenRCT2/save/${OPENRCT2_SAVE_FILE}
+    restart: unless-stopped
+    stdin_open: true
+    tty: true
+
+rust-server:
+    image: didstopia/rust-server:latest
+    container_name: rust-server
+    environment:
+      - RUST_SERVER_STARTUP_ARGUMENTS=${RUST_SERVER_STARTUP_ARGUMENTS}
+      - RUST_SERVER_IDENTITY=${RUST_SERVER_IDENTITY}
+      - RUST_SERVER_PORT=${RUST_SERVER_PORT}
+      - RUST_SERVER_QUERYPORT=${RUST_SERVER_QUERYPORT}
+      - RUST_SERVER_SEED=${RUST_SERVER_SEED}
+      - RUST_SERVER_WORLDSIZE=${RUST_SERVER_WORLDSIZE}
+      - RUST_SERVER_NAME=${RUST_SERVER_NAME}
+      - RUST_SERVER_MAXPLAYERS=${RUST_SERVER_MAXPLAYERS}
+      - RUST_SERVER_DESCRIPTION=${RUST_SERVER_DESCRIPTION}
+      - RUST_SERVER_URL=${RUST_SERVER_URL}
+      - RUST_SERVER_BANNER_URL=${RUST_SERVER_BANNER_URL}
+      - RUST_SERVER_SAVE_INTERVAL=${RUST_SERVER_SAVE_INTERVAL}
+      - RUST_RCON_WEB=${RUST_RCON_WEB}
+      - RUST_RCON_PORT=${RUST_RCON_PORT}
+      - RUST_RCON_PASSWORD=${RUST_RCON_PASSWORD}
+      - RUST_APP_PORT=${RUST_APP_PORT}
+      - RUST_BRANCH=${RUST_BRANCH}
+      - RUST_UPDATE_CHECKING=${RUST_UPDATE_CHECKING}
+      - RUST_UPDATE_BRANCH=${RUST_UPDATE_BRANCH}
+      - RUST_START_MODE=${RUST_START_MODE}
+      - RUST_OXIDE_ENABLED=${RUST_OXIDE_ENABLED}
+      - RUST_OXIDE_UPDATE_ON_BOOT=${RUST_OXIDE_UPDATE_ON_BOOT}
+      - RUST_CARBON_ENABLED=${RUST_CARBON_ENABLED}
+      - RUST_CARBON_UPDATE_ON_BOOT=${RUST_CARBON_UPDATE_ON_BOOT}
+      - RUST_CARBON_BRANCH=${RUST_CARBON_BRANCH}
+      - RUST_RCON_SECURE_WEBSOCKET=${RUST_RCON_SECURE_WEBSOCKET}
+      - RUST_HEARTBEAT=${RUST_HEARTBEAT}
+    ports:
+      - "${RUST_SERVER_PORT}:${RUST_SERVER_PORT}/udp"
+      - "${RUST_SERVER_QUERYPORT}:${RUST_SERVER_QUERYPORT}/tcp"
+      - "${RUST_APP_PORT}:${RUST_APP_PORT}/tcp"
+    volumes:
+      - "${RUST_DATA_PATH}:/steamcmd/rust"
+    restart: unless-stopped
+Minecraft Server:
+  image: itzg/minecraft-server
+  container_name: Galactic-Minecraft
+  environment:
+    EULA: "${EULA}" 
+    VERSION: "${MC_VERSION}" 
+    TYPE: "${MC_TYPE}" 
+    MEMORY: "${MC_MEMORY}"     
+  ports:
+      - "25565:25565" 
+  volumes:
+      - "${MC_DATA_PATH}:/data" 
+  restart: unless-stopped
+  tty: true 
+  stdin_open: true

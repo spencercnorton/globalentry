@@ -1,2 +1,2 @@
 #!/bin/bash
-docker-compose --env-file home/globalentry/Secrets/.env up -d
+docker-compose -f GlobeNet/docker-compose.yml up -d

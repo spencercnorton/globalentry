@@ -11,10 +11,10 @@ services:
       - net.ipv6.conf.all.disable_ipv6=1
     ports:
       - "50000:8080" # QBitorrent
-      - "50001:7878" # 
-      - "50002:8989" # 
-      - "50003:9117" # 
-      - "50004:9696" # 
+      - "50001:7878" #
+      - "50002:8989" #
+      - "50003:9117" #
+      - "50004:9696" #
       - "50005:9091" #
       - "50006:4444" #
       - "50007:8181" #
@@ -41,6 +41,8 @@ services:
       - TECHNOLOGY=${NORDNET1_TECHNOLOGY}
       - CONNECT=${NORDNET1_CONNECT}
     restart: unless-stopped
+    env_file:
+      - ../../Secrets/.env
 
   NordNet-2:
     image: ghcr.io/bubuntux/nordvpn
@@ -51,10 +53,10 @@ services:
       - net.ipv4.conf.all.src_valid_mark=1
       - net.ipv6.conf.all.disable_ipv6=1
     ports:
-      - "50025:8080" # 
+      - "50025:8080" #
       - "50026:7878" # Radarr
       - "50027:8989" # Sonarr
-      - "50028:9117" # 
+      - "50028:9117" #
       - "50029:9696" # Prowlarr
       - "50030:9091" #
       - "50031:4444" #
@@ -75,13 +77,14 @@ services:
       - "50046:8276" #
       - "50047:8277" #
       - "50048:8278" #
-
     environment:
       - TOKEN=${NORDNET2_TOKEN}
       - NETWORK=${NORDNET2_NETWORK}
       - TECHNOLOGY=${NORDNET2_TECHNOLOGY}
       - CONNECT=${NORDNET2_CONNECT}
     restart: unless-stopped
+    env_file:
+      - ../../Secrets/.env
 
   NordNet-3:
     image: ghcr.io/bubuntux/nordvpn
@@ -92,15 +95,15 @@ services:
       - net.ipv4.conf.all.src_valid_mark=1
       - net.ipv6.conf.all.disable_ipv6=1
     ports:
-      - "50025:8080" # 
+      - "50025:8080" #
       - "50026:7878" #
       - "50027:8989" #
-      - "50028:9117" # 
+      - "50028:9117" #
       - "50029:9696" #
       - "50030:9091" #
       - "50031:4444" #
       - "50032:5055" #
-      - "50033:8181" # 
+      - "50033:8181" #
       - "50034:8265" #
       - "50035:8266" #
       - "50036:8267" #
@@ -122,6 +125,8 @@ services:
       - TECHNOLOGY=${NORDNET3_TECHNOLOGY}
       - CONNECT=${NORDNET3_CONNECT}
     restart: unless-stopped
+    env_file:
+      - ../../Secrets/.env
 
   Galactic-Tor:
     image: thetorproject/obfs4-bridge:latest
@@ -140,6 +145,8 @@ services:
       - TZ=${TIMEZONE}
     command: tor -f /etc/tor/torrc
     restart: unless-stopped
+    env_file:
+      - ../../Secrets/.env
 
   Galactic-Adguard:
     image: adguard/adguardhome
@@ -153,8 +160,9 @@ services:
       - PGID=${PGID}
     restart: unless-stopped
     network_mode: host
+    env_file:
+      - ../../Secrets/.env
 
-  
   Galactic-MTProto:
     image: telegrammessenger/proxy:latest
     container_name: Galactic-MTProto
@@ -169,7 +177,9 @@ services:
     volumes:
       - "${MT_PROTO_CONFIG_DIR}:/data"
     network_mode: "bridge"
-  
+    env_file:
+      - ../../Secrets/.env
+
   Galactic-GDDNS:
     image: alpine:latest
     container_name: Galactic-GDDNS
@@ -182,8 +192,9 @@ services:
       - PUID=${PUID}
     restart: unless-stopped
     command: >
-      /bin/sh -c "apk --no-cache add curl && while true; do
-      /bin/sh /google-ddns.sh && sleep 300; done"
+      /bin/sh -c "apk --no-cache add curl && while true; do /bin/sh /google-ddns.sh && sleep 300; done"
+    env_file:
+      - ../../Secrets/.env
 
   Galactic-CloudFlare:
     image: oznu/cloudflare-ddns
@@ -198,7 +209,9 @@ services:
       - RRTYPE=${CLOUDFLARE_RRTYPE}
       - CRON=${CLOUDFLARE_CRON}
     restart: unless-stopped
-  
+    env_file:
+      - ../../Secrets/.env
+
   Galactic-ShadowSocks:
     image: shadowsocks/shadowsocks-libev
     container_name: Galactic-ShadowSocks
@@ -212,6 +225,8 @@ services:
       - DNS_ADDRS=${SHADOWSOCKS_DNS_ADDRS}
     restart: unless-stopped
     network_mode: bridge
+    env_file:
+      - ../../Secrets/.env
 
   Galactic-Socks-Switzerland:
     image: serjs/go-socks5-proxy
@@ -221,6 +236,8 @@ services:
       - PROXY_USER=${SOCKS_USER}
       - PROXY_PASSWORD=${SOCKS_PASSWORD}
     restart: always
+    env_file:
+      - ../../Secrets/.env
 
   Galactic-Socks-Canada:
     image: serjs/go-socks5-proxy
@@ -230,6 +247,8 @@ services:
       - PROXY_USER=${SOCKS_USER}
       - PROXY_PASSWORD=${SOCKS_PASSWORD}
     restart: always
+    env_file:
+      - ../../Secrets/.env
 
   Galactic-Socks-Japan:
     image: serjs/go-socks5-proxy
@@ -239,6 +258,8 @@ services:
       - PROXY_USER=${SOCKS_USER}
       - PROXY_PASSWORD=${SOCKS_PASSWORD}
     restart: always
+    env_file:
+      - ../../Secrets/.env
 
   watchtower:
     image: containrrr/watchtower
@@ -246,3 +267,5 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     restart: unless-stopped
+    env_file:
+      - ../../Secrets/.env

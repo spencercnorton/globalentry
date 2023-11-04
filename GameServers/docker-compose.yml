@@ -1,7 +1,6 @@
 version: '3.9'
 Services:
-
-sons-of-the-forest-dedicated-server:
+  sons-of-the-forest-dedicated-server:
     container_name: Galactic-SOTF
     image: jammsen/sons-of-the-forest-dedicated-server:latest
     restart: always
@@ -15,8 +14,10 @@ sons-of-the-forest-dedicated-server:
       - ${STEAMCMD_VOLUME}:/steamcmd
       - ${SOTF_VOLUME}:/sonsoftheforest
       - ${WINE_VOLUME}:/winedata
+    env_file:
+      - ../../Secrets/.env
 
-openrct2-server:
+  openrct2-server:
     image: openrct2/openrct2-cli:develop
     container_name: Galactic-OpenRCT2
     ports:
@@ -27,8 +28,10 @@ openrct2-server:
     restart: unless-stopped
     stdin_open: true
     tty: true
+    env_file:
+      - ../../Secrets/.env
 
-rust-server:
+  rust-server:
     image: didstopia/rust-server:latest
     container_name: rust-server
     environment:
@@ -66,18 +69,20 @@ rust-server:
     volumes:
       - "${RUST_DATA_PATH}:/steamcmd/rust"
     restart: unless-stopped
-Minecraft Server:
-  image: itzg/minecraft-server
-  container_name: Galactic-Minecraft
-  environment:
-    EULA: "${EULA}" 
-    VERSION: "${MC_VERSION}" 
-    TYPE: "${MC_TYPE}" 
-    MEMORY: "${MC_MEMORY}"     
-  ports:
-      - "25565:25565" 
-  volumes:
-      - "${MC_DATA_PATH}:/data" 
-  restart: unless-stopped
-  tty: true 
-  stdin_open: true
+  Minecraft Server:
+    image: itzg/minecraft-server
+    container_name: Galactic-Minecraft
+    environment:
+      EULA: "${EULA}"
+      VERSION: "${MC_VERSION}"
+      TYPE: "${MC_TYPE}"
+      MEMORY: "${MC_MEMORY}"
+    ports:
+      - "25565:25565"
+    volumes:
+      - "${MC_DATA_PATH}:/data"
+    restart: unless-stopped
+    tty: true
+    stdin_open: true
+    env_file:
+      - ../../Secrets/.env

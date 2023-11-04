@@ -1,0 +1,5 @@
+# Ignore directories named Secrets
+**/Secrets/
+
+# Ignore Docker Compose .env files
+*.env

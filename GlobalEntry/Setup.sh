@@ -27,6 +27,19 @@ sudo systemctl enable --now guacd
 echo "Installing other necessary tools..."
 sudo apt-get install -y curl nano htop net-tools
 
+# Install Wine
+echo "Installing Wine..."
+# Add the WineHQ Ubuntu repository
+wget -nc https://dl.winehq.org/wine-builds/winehq.key
+sudo apt-key add winehq.key
+sudo add-apt-repository 'deb https://dl.winehq.org/wine-builds/ubuntu/ $(lsb_release -cs) main'
+sudo apt-get update -y
+# Install Wine
+sudo apt-get install --install-recommends winehq-stable -y
+
+# Verify Wine installation
+wine --version
+
 # Install Docker
 echo "Installing Docker..."
 sudo apt-get install -y apt-transport-https ca-certificates software-properties-common

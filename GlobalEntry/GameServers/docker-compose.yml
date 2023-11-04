@@ -81,3 +81,14 @@ Minecraft Server:
   restart: unless-stopped
   tty: true 
   stdin_open: true
+
+steamcmd:
+    image: steamcmd/steamcmd:latest
+    container_name: steamcmd-csgo
+    volumes:
+      - "${STEAM_DATA}:/data" 
+    entrypoint: /bin/sh 
+    tty: true 
+    stdin_open: true 
+
+    

@@ -24,8 +24,8 @@ services:
       - TZ=${TIMEZONE}
     volumes:
       - ${BAZARR_CONFIG}:/config
-      - ${MEDIA_DIR_1}:/21TB
-      - ${MEDIA_DIR_2}:/20TB
+      - ${MEDIA_DIR_1}:/media1
+      - ${MEDIA_DIR_2}:/media2
       - ${DOWNLOADS}:/downloads
       - ${TORRENT_COMPLETE}:/complete
     restart: unless-stopped
@@ -64,8 +64,8 @@ services:
       - TZ=${TIMEZONE}
     volumes:
       - ${SONARR_CONFIG}:/config
-      - ${MEDIA_VOLUME_1}:/21TB
-      - ${MEDIA_VOLUME_2}:/20TB
+      - ${MEDIA_VOLUME_1}:/media1
+      - ${MEDIA_VOLUME_2}:/media2
       - ${DOWNLOADS}:/downloads
       - ${TORRENT_COMPLETE}:/complete
 
@@ -79,8 +79,8 @@ services:
       - TZ=${TIMEZONE}
     volumes:
       - ${RADARR_CONFIG}:/config
-      - ${MEDIA_VOLUME_1}:/21TB
-      - ${MEDIA_VOLUME_2}:/20TB
+      - ${MEDIA_VOLUME_1}:/media1
+      - ${MEDIA_VOLUME_2}:/media2
       - ${DOWNLOADS}:/downloads
       - ${TORRENT_COMPLETE}:/complete
 
@@ -127,8 +127,8 @@ services:
       - TOKEN=${PLEX_CLAIM_TOKEN}
     volumes:
       - ${PLEX_CONFIG}:/config
-      - ${MEDIA_DIR_1}:/21TB
-      - ${MEDIA_DIR_2}:/20TB
+      - ${MEDIA_DIR_1}:/media1
+      - ${MEDIA_DIR_2}:/media2
       - ${PLEX_TRANS}:/transcode
     restart: unless-stopped
 

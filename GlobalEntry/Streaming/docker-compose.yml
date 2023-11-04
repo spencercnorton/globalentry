@@ -171,6 +171,23 @@ services:
     volumes:
       - ${DB_DATA}:/var/lib/postgresql/data
     restart: unless-stopped
+  
+   vuze:
+    image: openjdk:11-jre-slim
+    container_name: vuze
+    network_mode: "container:NordNet-3"
+    volumes:
+      - ./vuze_data:/vuze_data
+    command: >
+      /bin/bash -c "
+        apt-get update &&
+        apt-get install -y wget &&
+        wget -O /vuze_data/VuzeInstaller.tar.bz2 'http://download.vuze.com/download.php?t=1' &&
+        mkdir -p /opt/vuze &&
+        tar -xvjf /vuze_data/VuzeInstaller.tar.bz2 -C /opt/vuze &&
+        /opt/vuze/vuze -Dazureus.config.path=/vuze_data/config -Dazureus.install.path=/opt/vuze
+      "
+    restart: unless-stopped
 
   watchtower:
     image: containrrr/watchtower

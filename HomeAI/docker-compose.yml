@@ -11,7 +11,9 @@ services:
       - TZ=${TIMEZONE}
     restart: unless-stopped
     network_mode: host
-  
+    env_file:
+      - ../../Secrets/.env
+
   homebridge:
     image: oznu/homebridge:latest
     container_name: Galactic-HomeBridge
@@ -25,6 +27,8 @@ services:
       - PUID=${PUID}
     volumes:
       - "${HOMEBRIDGE_CONFIG_DIR}:/homebridge"
+    env_file:
+      - ../../Secrets/.env
 
   watchtower:
     image: containrrr/watchtower
@@ -32,3 +36,5 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     restart: unless-stopped
+    env_file:
+      - ../../Secrets/.env

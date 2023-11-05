@@ -98,7 +98,7 @@ services:
   Galactic-Overseerr:
     image: linuxserver/overseerr:latest
     container_name: Galactic-Overseerr
-    network_mode: "container:NordNet-2"
+    network_mode: "container:NordNet-3"
     environment:
       - PUID=1000
       - PGID=1000

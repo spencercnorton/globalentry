@@ -90,7 +90,7 @@ Services:
     env_file:
       - ../../Secrets/.env
 
-   steamcmd:
+  steamcmd:
     image: steamcmd/steamcmd:latest
     container_name: Galactic-Steam
     volumes:
@@ -98,7 +98,8 @@ Services:
     entrypoint: /bin/sh
     tty: true
     stdin_open: true 
-   
+    env_file:
+      - ../../Secrets/.env
    
 
     

@@ -100,6 +100,25 @@ Services:
     stdin_open: true 
     env_file:
       - ../../Secrets/.env
+  
+  version: '3.8'
+
+  steam-headless:
+    image: ghcr.io/steam-headless/steam-headless:latest
+    container_name: steam-headless
+    environment:
+      - PULSE_SERVER=${PULSE_SERVER}
+      - STEAM_USERNAME=${STEAM_USERNAME}
+      - STEAM_PASSWORD=${STEAM_PASSWORD}
+      - STEAM_GUARD_CODE=${STEAM_GUARD_CODE}
+    volumes:
+      - steam_data:
+      - steam_config:
+  steam_config:
+  pulseaudio:
+    env_file:
+      - ../../Secrets/.env
+
    
 
     

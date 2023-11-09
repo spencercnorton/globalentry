@@ -94,28 +94,37 @@ Services:
     image: steamcmd/steamcmd:latest
     container_name: Galactic-Steam
     volumes:
-      - ${STEAM_DATA}:/data
+      - ${STEAMCMD_DATA}:/data
     entrypoint: /bin/sh
     tty: true
     stdin_open: true 
     env_file:
       - ../../Secrets/.env
-  
-  version: '3.8'
 
   steam-headless:
     image: ghcr.io/steam-headless/steam-headless:latest
-    container_name: steam-headless
+    container_name: Galactic-Steam
     environment:
       - PULSE_SERVER=${PULSE_SERVER}
       - STEAM_USERNAME=${STEAM_USERNAME}
       - STEAM_PASSWORD=${STEAM_PASSWORD}
       - STEAM_GUARD_CODE=${STEAM_GUARD_CODE}
     volumes:
-      - steam_data:
-      - steam_config:
-  steam_config:
-  pulseaudio:
+      - ${STEAM_DATA}:/games
+      - ${STEAM_CONFIG}:/home/steam
+      - /opt/container-data/steam-headless/home:/home/steam
+      - /opt/container-data/steam-headless/.X11-unix:/tmp/.X11-unix
+      - /opt/container-data/steam-headless/pulse:/run/pulse
+    ports:
+      - "8083:8083"
+    restart: unless-stopped
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              capabilities: [gpu, utility]
+              device_ids: ['0']  # Replace with your GPU device ID(s) if necessary
     env_file:
       - ../../Secrets/.env
 

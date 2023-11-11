@@ -42,7 +42,6 @@ services:
     env_file:
       - ../../Secrets/.env
 
-
   NordNet-1:
     image: ghcr.io/bubuntux/nordvpn
     container_name: NordNet-1

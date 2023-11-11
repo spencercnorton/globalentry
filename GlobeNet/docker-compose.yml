@@ -8,7 +8,6 @@ services:
     restart: always
     ports:
       - "4822:4822"
-    
 
   guacamole:
     image: guacamole/guacamole
@@ -42,7 +41,7 @@ services:
       - ./initdb.sql:/docker-entrypoint-initdb.d/initdb.sql
     env_file:
       - ../../Secrets/.env
-      
+
   NordNet-1:
     image: ghcr.io/bubuntux/nordvpn
     container_name: NordNet-1
@@ -102,7 +101,7 @@ services:
       - "50029:9696" # Prowlarr
       - "50030:9091" #
       - "50031:4444" #
-      - "50032:5055" # 
+      - "50032:5055" #
       - "50033:8181" # Tautulli
       - "50034:8265" #
       - "50035:8266" #

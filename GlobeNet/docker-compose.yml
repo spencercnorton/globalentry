@@ -9,19 +9,19 @@ services:
       - "4822:4822"
 
   guacamole:
-  image: guacamole/guacamole
-  container_name: Galactic-Guacamole
-  restart: always
-  depends_on:
-    - guacd
-    - mysql
-  environment:
-    - MYSQL_DATABASE=guacamole_db
-    - MYSQL_USER=${GUAC_USERNAME}
-    - MYSQL_PASSWORD=${GUAC_PASSWORD}
-    - GUACD_HOSTNAME=guacd
-    - GUACD_PORT=4822
-    - MYSQL_HOSTNAME=mysql
+    image: guacamole/guacamole
+    container_name: Galactic-Guacamole
+    restart: always
+    depends_on:
+      - guacd
+      - mysql
+    environment:
+      - MYSQL_DATABASE=guacamole_db
+      - MYSQL_USER=${GUAC_USERNAME}
+      - MYSQL_PASSWORD=${GUAC_PASSWORD}
+      - GUACD_HOSTNAME=guacd
+      - GUACD_PORT=4822
+      - MYSQL_HOSTNAME=mysql
     # - MYSQL_PORT=3306 # Uncomment this if using a custom MySQL port
   ports:
     - "8080:8080"

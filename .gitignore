@@ -3,3 +3,5 @@
 
 # Ignore Docker Compose .env files
 *.env
+
+winehq.key

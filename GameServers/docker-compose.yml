@@ -14,8 +14,6 @@ Services:
       - ${STEAM_DATA}:/steamcmd
       - ${SOTF_VOLUME}:/sonsoftheforest
       - ${WINE_VOLUME}:/winedata
-    env_file:
-      - ../../Secrets/.env
 
   openrct2-server:
     image: openrct2/openrct2-cli:develop
@@ -28,8 +26,6 @@ Services:
     restart: unless-stopped
     stdin_open: true
     tty: true
-    env_file:
-      - ../../Secrets/.env
 
   rust-server:
     image: didstopia/rust-server:latest
@@ -69,8 +65,6 @@ Services:
     volumes:
       - "${RUST_DATA_PATH}:/steamcmd/rust"
     restart: unless-stopped
-    env_file:
-      - ../../Secrets/.env
 
   Minecraft Server:
     image: itzg/minecraft-server
@@ -87,8 +81,6 @@ Services:
     restart: unless-stopped
     tty: true
     stdin_open: true
-    env_file:
-      - ../../Secrets/.env
 
   steamcmd:
     image: steamcmd/steamcmd:latest
@@ -98,8 +90,6 @@ Services:
     entrypoint: /bin/sh
     tty: true
     stdin_open: true 
-    env_file:
-      - ../../Secrets/.env
 
   steam-headless:
     image: ghcr.io/steam-headless/steam-headless:latest
@@ -125,9 +115,4 @@ Services:
           - driver: nvidia
             capabilities: [gpu]
             device_ids: ['02:00.0']
-    env_file:
-      - ../../Secrets/.env
-
-   
-
-    
+            

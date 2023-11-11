@@ -11,7 +11,7 @@ services:
       - TZ=${TIMEZONE}
     volumes:
       - ${TAUTULLI_CONFIG}:/config
-    restart: unless-stopped 
+    restart: unless-stopped
     env_file:
       - ../../Secrets/.env
 

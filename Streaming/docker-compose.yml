@@ -127,6 +127,13 @@ services:
       - ${MEDIA_VOLUME_2}:/media2
       - ${TDARR_CACHE}:/temp
     restart: unless-stopped
+    deploy:
+      resources:
+        reservations:
+          devices:
+          - driver: nvidia
+            capabilities: [gpu]
+            device_ids: ['02:00.0']
     env_file:
       - ../../Secrets/.env
 
@@ -145,6 +152,13 @@ services:
       - ${MEDIA_DIR_2}:/media2
       - ${PLEX_TRANS}:/transcode
     restart: unless-stopped
+    deploy:
+      resources:
+        reservations:
+          devices:
+          - driver: nvidia
+            capabilities: [gpu]
+            device_ids: ['02:00.0']
     env_file:
       - ../../Secrets/.env
 

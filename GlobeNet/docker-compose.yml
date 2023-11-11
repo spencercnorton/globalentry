@@ -26,8 +26,8 @@ services:
       - MYSQL_PASSWORD=${GUAC_PW}
     ports:
       - "8088:8080"
-    # # env_file:
-#      - ../../Secrets/.env
+    # env_file:
+      - ../../Secrets/.env
   mysql:
     image: mysql:5.7
     container_name: mysql
@@ -40,8 +40,8 @@ services:
     volumes:
       - mysql_data:/var/lib/mysql
       - ./initdb.sql:/docker-entrypoint-initdb.d/initdb.sql
-    # env_file:
-#      - ../../Secrets/.env
+    env_file:
+      - ../../Secrets/.env
       
   NordNet-1:
     image: ghcr.io/bubuntux/nordvpn
@@ -83,8 +83,8 @@ services:
       - TECHNOLOGY=${NORDNET1_TECHNOLOGY}
       - CONNECT=${NORDNET1_CONNECT}
     restart: unless-stopped
-    # env_file:
-#      - ../../Secrets/.env
+    env_file:
+      - ../../Secrets/.env
 
   NordNet-2:
     image: ghcr.io/bubuntux/nordvpn
@@ -125,8 +125,8 @@ services:
       - TECHNOLOGY=${NORDNET2_TECHNOLOGY}
       - CONNECT=${NORDNET2_CONNECT}
     restart: unless-stopped
-    # env_file:
-#      - ../../Secrets/.env
+    env_file:
+      - ../../Secrets/.env
 
   NordNet-3:
     image: ghcr.io/bubuntux/nordvpn
@@ -137,38 +137,38 @@ services:
       - net.ipv4.conf.all.src_valid_mark=1
       - net.ipv6.conf.all.disable_ipv6=1
     ports:
-      - "50025:8080" # Vuze
-      - "50026:7878" #
-      - "50027:8989" #
-      - "50028:9117" #
-      - "50029:9696" #
-      - "50030:9091" #
-      - "50031:4444" #
-      - "50032:5055" # Overseer
-      - "50033:8181" #
-      - "50034:8265" #
-      - "50035:8266" #
-      - "50036:8267" #
-      - "50037:1080" # SOCKS
-      - "50038:8268" #
-      - "50039:8269" #
-      - "50040:8270" #
-      - "50041:8271" #
-      - "50042:8272" #
-      - "50043:8273" #
-      - "50044:8274" #
-      - "50045:8275" #
-      - "50046:8276" #
-      - "50047:8277" #
-      - "50048:8278" #
+      - "50049:8080" # Vuze
+      - "50050:7878" #
+      - "50051:8989" #
+      - "50052:9117" #
+      - "50053:9696" #
+      - "50054:9091" #
+      - "50055:4444" #
+      - "50056:5055" # Overseer
+      - "50057:8181" #
+      - "50058:8265" #
+      - "50059:8266" #
+      - "50060:8267" #
+      - "50061:1080" # SOCKS
+      - "50061:8268" #
+      - "50063:8269" #
+      - "50064:8270" #
+      - "50065:8271" #
+      - "50066:8272" #
+      - "50067:8273" #
+      - "50068:8274" #
+      - "50069:8275" #
+      - "50070:8276" #
+      - "50071:8277" #
+      - "50072:8278" #
     environment:
       - TOKEN=${NORDNET3_TOKEN}
       - NETWORK=${NORDNET3_NETWORK}
       - TECHNOLOGY=${NORDNET3_TECHNOLOGY}
       - CONNECT=${NORDNET3_CONNECT}
     restart: unless-stopped
-    # env_file:
-#      - ../../Secrets/.env
+    env_file:
+      - ../../Secrets/.env
 
   Galactic-Tor:
     image: thetorproject/obfs4-bridge:latest
@@ -187,8 +187,8 @@ services:
       - TZ=${TIMEZONE}
     command: tor -f /etc/tor/torrc
     restart: unless-stopped
-    # env_file:
-#      - ../../Secrets/.env
+    env_file:
+      - ../../Secrets/.env
 
   Galactic-Adguard:
     image: adguard/adguardhome
@@ -202,8 +202,8 @@ services:
       - PGID=${PGID}
     restart: unless-stopped
     network_mode: host
-    # env_file:
-#      - ../../Secrets/.env
+    env_file:
+      - ../../Secrets/.env
 
   Galactic-MTProto:
     image: telegrammessenger/proxy:latest
@@ -219,8 +219,8 @@ services:
     volumes:
       - "${MT_PROTO_CONFIG_DIR}:/data"
     network_mode: "bridge"
-    # env_file:
-#      - ../../Secrets/.env
+    env_file:
+      - ../../Secrets/.env
 
   Galactic-GDDNS:
     image: alpine:latest
@@ -235,8 +235,8 @@ services:
     restart: unless-stopped
     command: >
       /bin/sh -c "apk --no-cache add curl && while true; do /bin/sh /google-ddns.sh && sleep 300; done"
-    # env_file:
-#      - ../../Secrets/.env
+    env_file:
+      - ../../Secrets/.env
 
   Galactic-CloudFlare:
     image: oznu/cloudflare-ddns
@@ -251,8 +251,8 @@ services:
       - RRTYPE=${CLOUDFLARE_RRTYPE}
       - CRON=${CLOUDFLARE_CRON}
     restart: unless-stopped
-    # env_file:
-#      - ../../Secrets/.env
+    env_file:
+      - ../../Secrets/.env
 
   Galactic-ShadowSocks:
     image: shadowsocks/shadowsocks-libev
@@ -267,8 +267,8 @@ services:
       - DNS_ADDRS=${SHADOWSOCKS_DNS_ADDRS}
     restart: unless-stopped
     network_mode: bridge
-    # env_file:
-#      - ../../Secrets/.env
+    env_file:
+      - ../../Secrets/.env
 
   Galactic-Socks-Switzerland:
     image: serjs/go-socks5-proxy
@@ -278,8 +278,8 @@ services:
       - PROXY_USER=${SOCKS_USER}
       - PROXY_PASSWORD=${SOCKS_PASSWORD}
     restart: always
-    # env_file:
-#      - ../../Secrets/.env
+    env_file:
+      - ../../Secrets/.env
 
   Galactic-Socks-Canada:
     image: serjs/go-socks5-proxy
@@ -289,8 +289,8 @@ services:
       - PROXY_USER=${SOCKS_USER}
       - PROXY_PASSWORD=${SOCKS_PASSWORD}
     restart: always
-    # env_file:
-#      - ../../Secrets/.env
+    env_file:
+      - ../../Secrets/.env
 
   Galactic-Socks-Japan:
     image: serjs/go-socks5-proxy
@@ -300,8 +300,8 @@ services:
       - PROXY_USER=${SOCKS_USER}
       - PROXY_PASSWORD=${SOCKS_PASSWORD}
     restart: always
-    # env_file:
-#      - ../../Secrets/.env
+    env_file:
+      - ../../Secrets/.env
 
   watchtower:
     image: containrrr/watchtower
@@ -309,5 +309,5 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     restart: unless-stopped
-    # env_file:
-#      - ../../Secrets/.env
+    env_file:
+      - ../../Secrets/.env

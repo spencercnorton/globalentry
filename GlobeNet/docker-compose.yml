@@ -9,7 +9,7 @@ services:
     ports:
       - "4822:4822"
     env_file:
-      - ../../Secrets/.env
+      - home/spencercnorton/Secrets/.env
 
   guacamole:
     image: guacamole/guacamole
@@ -28,7 +28,7 @@ services:
     ports:
       - "8088:8080"
     env_file:
-      - ../../Secrets/.env
+      - home/spencercnorton/Secrets/.env
   mysql:
     image: mysql:5.7
     container_name: mysql
@@ -42,7 +42,7 @@ services:
       - mysql_data:/var/lib/mysql
       - ./initdb.sql:/docker-entrypoint-initdb.d/initdb.sql
     env_file:
-      - ../../Secrets/.env
+      - home/spencercnorton/Secrets/.env
       
   NordNet-1:
     image: ghcr.io/bubuntux/nordvpn
@@ -85,7 +85,7 @@ services:
       - CONNECT=${NORDNET1_CONNECT}
     restart: unless-stopped
     env_file:
-      - ../../Secrets/.env
+      - home/spencercnorton/Secrets/.env
 
   NordNet-2:
     image: ghcr.io/bubuntux/nordvpn
@@ -127,7 +127,7 @@ services:
       - CONNECT=${NORDNET2_CONNECT}
     restart: unless-stopped
     env_file:
-      - ../../Secrets/.env
+      - home/spencercnorton/Secrets/.env
 
   NordNet-3:
     image: ghcr.io/bubuntux/nordvpn
@@ -169,7 +169,7 @@ services:
       - CONNECT=${NORDNET3_CONNECT}
     restart: unless-stopped
     env_file:
-      - ../../Secrets/.env
+      - home/spencercnorton/Secrets/.env
 
   Galactic-Tor:
     image: thetorproject/obfs4-bridge:latest
@@ -189,7 +189,7 @@ services:
     command: tor -f /etc/tor/torrc
     restart: unless-stopped
     env_file:
-      - ../../Secrets/.env
+      - home/spencercnorton/Secrets/.env
 
   Galactic-Adguard:
     image: adguard/adguardhome
@@ -204,7 +204,7 @@ services:
     restart: unless-stopped
     network_mode: host
     env_file:
-      - ../../Secrets/.env
+      - home/spencercnorton/Secrets/.env
 
   Galactic-MTProto:
     image: telegrammessenger/proxy:latest
@@ -221,7 +221,7 @@ services:
       - "${MT_PROTO_CONFIG_DIR}:/data"
     network_mode: "bridge"
     env_file:
-      - ../../Secrets/.env
+      - home/spencercnorton/Secrets/.env
 
   Galactic-GDDNS:
     image: alpine:latest
@@ -237,7 +237,7 @@ services:
     command: >
       /bin/sh -c "apk --no-cache add curl && while true; do /bin/sh /google-ddns.sh && sleep 300; done"
     env_file:
-      - ../../Secrets/.env
+      - home/spencercnorton/Secrets/.env
 
   Galactic-CloudFlare:
     image: oznu/cloudflare-ddns
@@ -253,7 +253,7 @@ services:
       - CRON=${CLOUDFLARE_CRON}
     restart: unless-stopped
     env_file:
-      - ../../Secrets/.env
+      - home/spencercnorton/Secrets/.env
 
   Galactic-ShadowSocks:
     image: shadowsocks/shadowsocks-libev
@@ -269,7 +269,7 @@ services:
     restart: unless-stopped
     network_mode: bridge
     env_file:
-      - ../../Secrets/.env
+      - home/spencercnorton/Secrets/.env
 
   Galactic-Socks-Switzerland:
     image: serjs/go-socks5-proxy
@@ -280,7 +280,7 @@ services:
       - PROXY_PASSWORD=${SOCKS_PASSWORD}
     restart: always
     env_file:
-      - ../../Secrets/.env
+      - home/spencercnorton/Secrets/.env
 
   Galactic-Socks-Canada:
     image: serjs/go-socks5-proxy
@@ -291,7 +291,7 @@ services:
       - PROXY_PASSWORD=${SOCKS_PASSWORD}
     restart: always
     env_file:
-      - ../../Secrets/.env
+      - home/spencercnorton/Secrets/.env
 
   Galactic-Socks-Japan:
     image: serjs/go-socks5-proxy
@@ -302,7 +302,7 @@ services:
       - PROXY_PASSWORD=${SOCKS_PASSWORD}
     restart: always
     env_file:
-      - ../../Secrets/.env
+      - home/spencercnorton/Secrets/.env
 
   watchtower:
     image: containrrr/watchtower
@@ -311,4 +311,4 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     restart: unless-stopped
     env_file:
-      - ../../Secrets/.env
+      - home/spencercnorton/Secrets/.env

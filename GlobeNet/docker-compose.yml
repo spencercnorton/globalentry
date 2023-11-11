@@ -18,7 +18,7 @@ services:
     environment:
       - MYSQL_DATABASE=guacamole_db
       - MYSQL_USER=guacamole_user
-      - MYSQL_PASSWORD=insertpassword
+      - MYSQL_PASSWORD=${GUAC_PASSWORD}
       - GUACD_HOSTNAME=guacd
       - GUACD_PORT=4822
       - MYSQL_HOSTNAME=mysql
@@ -31,7 +31,7 @@ services:
     container_name: mysql
     restart: always
     environment:
-      - MYSQL_ROOT_PASSWORD=insertpassword
+      - MYSQL_ROOT_PASSWORD=${GUAC_PASSWORD}
       - MYSQL_DATABASE=guacamole_db
       - MYSQL_USER=guacamole_user
       - MYSQL_PASSWORD=password

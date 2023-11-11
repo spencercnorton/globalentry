@@ -38,7 +38,7 @@ services:
       - MYSQL_USER=${SOCKS_USER}
       - MYSQL_PASSWORD=${SOCKS_PASSWORD}
     volumes:
-      - ${AVACADO_DB}:/var/lib/mysql
+      - ${SOCKS_DB}:/var/lib/mysql
       - ./initdb.sql:/docker-entrypoint-initdb.d/initdb.sql
     env_file:
       - ../../Secrets/.env

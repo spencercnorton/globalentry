@@ -1,4 +1,4 @@
-version: '3'
+version: '2'
 # Docker Compose for GlobalEntry Network Infrastructure
 services:
   guacd:

@@ -67,7 +67,7 @@ Services:
       - "${RUST_SERVER_QUERYPORT}:${RUST_SERVER_QUERYPORT}/tcp"
       - "${RUST_APP_PORT}:${RUST_APP_PORT}/tcp"
     volumes:
-      - "${RUST_DATA_PATH}:/steamcmd/rust"
+      - "${RUST_DATA_PATH}:/steamcmd/rust" 
     restart: unless-stopped
     env_file:
       - ../../Secrets/.env

@@ -1,7 +1,6 @@
 version: '3'
 # Docker Compose for GlobalEntry Network Infrastructure
 services:
-
   guacd:
     image: guacamole/guacd
     container_name: Galactic-GuacD

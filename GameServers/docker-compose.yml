@@ -122,9 +122,9 @@ Services:
       resources:
         reservations:
           devices:
-            - driver: nvidia
-              capabilities: [gpu, utility]
-              device_ids: ['0']  # Replace with your GPU device ID(s) if necessary
+          - driver: nvidia
+            capabilities: [gpu]
+            device_ids: ['02:00.0']
     env_file:
       - ../../Secrets/.env
 

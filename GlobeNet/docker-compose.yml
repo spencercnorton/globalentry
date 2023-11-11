@@ -31,7 +31,7 @@ services:
     container_name: mysql
     restart: always
     environment:
-      - MYSQL_ROOT_PASSWORD=${GUAC_PASSWORD}
+      - MYSQL_ROOT_PASSWORD=insertpassword
       - MYSQL_DATABASE=guacamole_db
       - MYSQL_USER=${GUAC_USERNAME}
       - MYSQL_PASSWORD=${GUAC_PASSWORD}

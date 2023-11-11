@@ -22,7 +22,7 @@ services:
       - mysql:mysql
     environment:
       - MYSQL_DATABASE=guacamole_db
-      - MYSQL_USER=${GUACAMOLE_USER}
+      - MYSQL_USER=${GUAC_USER}
       - MYSQL_PASSWORD=${GUAC_PW}
     ports:
       - "8088:8080"
@@ -35,7 +35,7 @@ services:
     environment:
       - MYSQL_ROOT_PASSWORD=${GUAC_PW}
       - MYSQL_DATABASE=guacamole_db
-      - MYSQL_USER=${GUACAMOLE_USER}
+      - MYSQL_USER=${GUAC_USER}
       - MYSQL_PASSWORD=${GUAC_PW}
     volumes:
       - mysql_data:/var/lib/mysql

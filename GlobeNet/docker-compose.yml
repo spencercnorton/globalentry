@@ -17,7 +17,7 @@ services:
       - mysql
     environment:
       - MYSQL_DATABASE=guacamole_db
-      - MYSQL_USER=guacamole_user
+      - MYSQL_USER=${GUAC_USERNAME}
       - MYSQL_PASSWORD=${GUAC_PASSWORD}
       - GUACD_HOSTNAME=guacd
       - GUACD_PORT=4822
@@ -33,7 +33,7 @@ services:
     environment:
       - MYSQL_ROOT_PASSWORD=${GUAC_PASSWORD}
       - MYSQL_DATABASE=guacamole_db
-      - MYSQL_USER=guacamole_user
+      - MYSQL_USER=${GUAC_USERNAME}
       - MYSQL_PASSWORD=${GUAC_PASSWORD}
     volumes:
       - ${GUAC_DATABASE}:/var/lib/mysql

@@ -22,7 +22,7 @@ services:
     environment:
       - HOMEBRIDGE_CONFIG_UI=1
       - HOMEBRIDGE_CONFIG_UI_PORT=8581
-      - TZ=${TIMEZONE}
+      - TZ=${TIMEZONE} 
       - PGID=${PGID}
       - PUID=${PUID}
     volumes:

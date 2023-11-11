@@ -24,6 +24,7 @@ services:
       - MYSQL_PASSWORD=${GUAC_PASSWORD}
     ports:
       - "8080:8080"
+    network_mode: bridge
 
   mysql:
     image: mysql:5.7

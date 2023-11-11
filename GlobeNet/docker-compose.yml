@@ -21,23 +21,24 @@ services:
       - mysql:mysql
     environment:
       - MYSQL_DATABASE=guacamole_db
-      - MYSQL_USER=${FLEEB_USERNAME}
-      - MYSQL_PASSWORD=${FLEEB_PASSWORD}
+      - MYSQL_USER=${SOCKS_USER}
+      - MYSQL_PASSWORD=${SOCKS_PASSWORD}
     ports:
       - "8088:8080"
     env_file:
       - ../../Secrets/.env
+
   mysql:
     image: mysql:5.7
     container_name: mysql
     restart: always
     environment:
-      - MYSQL_ROOT_PASSWORD=${FLEEB_PASSWORD}
+      - MYSQL_ROOT_PASSWORD=${SOCKS_PASSWORD}
       - MYSQL_DATABASE=guacamole_db
-      - MYSQL_USER=${FLEEB_USERNAME}
-      - MYSQL_PASSWORD=${FLEEB_PASSWORD}
+      - MYSQL_USER=${SOCKS_USER}
+      - MYSQL_PASSWORD=${SOCKS_PASSWORD}
     volumes:
-      - ${FLEEB_DATABASE}:/var/lib/mysql
+      - ${AVACADO_DB}:/var/lib/mysql
       - ./initdb.sql:/docker-entrypoint-initdb.d/initdb.sql
     env_file:
       - ../../Secrets/.env

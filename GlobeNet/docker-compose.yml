@@ -22,6 +22,8 @@ services:
       - MYSQL_DATABASE=guacamole_db
       - MYSQL_USER=${GUAC_USERNAME}
       - MYSQL_PASSWORD=${GUAC_PASSWORD}
+      - GUACD_HOSTNAME=guacd
+      - GUACD_PORT=4822
     ports:
       - "8080:8080"
 

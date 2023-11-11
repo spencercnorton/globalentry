@@ -5,7 +5,7 @@ echo "Updating system..."
 sudo apt-get update -y
 sudo apt-get upgrade -y
 
-# Install GNOME Desktop Envi ronment
+# Install GNOME Desktop Environment
 echo "Installing GNOME Desktop Environment..."
 sudo apt-get install -y ubuntu-desktop
 

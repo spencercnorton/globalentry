@@ -17,8 +17,8 @@ services:
       - mysql
     environment:
       - MYSQL_DATABASE=guacamole_db
-      - MYSQL_USER=${GUAC_USERNAME}
-      - MYSQL_PASSWORD=${GUAC_PASSWORD}
+      - MYSQL_USER=guacamole_user
+      - MYSQL_PASSWORD=password
       - GUACD_HOSTNAME=guacd
       - GUACD_PORT=4822
       - MYSQL_HOSTNAME=mysql
@@ -33,8 +33,8 @@ services:
     environment:
       - MYSQL_ROOT_PASSWORD=insertpassword
       - MYSQL_DATABASE=guacamole_db
-      - MYSQL_USER=${GUAC_USERNAME}
-      - MYSQL_PASSWORD=${GUAC_PASSWORD}
+      - MYSQL_USER=guacamole_user
+      - MYSQL_PASSWORD=password
     volumes:
       - ${GUAC_DATABASE}:/var/lib/mysql
       - ./initdb.sql:/docker-entrypoint-initdb.d/initdb.sql

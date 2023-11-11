@@ -12,8 +12,6 @@ services:
     volumes:
       - ${TAUTULLI_CONFIG}:/config
     restart: unless-stopped
-    env_file:
-      - ../../Secrets/.env
 
   Galactic-Bazarr:
     image: linuxserver/bazarr
@@ -30,8 +28,6 @@ services:
       - ${DOWNLOADS}:/downloads
       - ${TORRENT_COMPLETE}:/complete
     restart: unless-stopped
-    env_file:
-      - ../../Secrets/.env
 
   Galactic-QBT:
     image: linuxserver/qbittorrent
@@ -45,8 +41,6 @@ services:
       - ${QBITTORRENT_CONFIG}:/config
       - ${DOWNLOADS}:/downloads
       - ${TORRENT_COMPLETE}:/complete
-    env_file:
-      - ../../Secrets/.env
 
   Galactic-Prowlarr:
     image: linuxserver/prowlarr
@@ -58,8 +52,6 @@ services:
       - TZ=${TIMEZONE}
     volumes:
       - ${PROWLARR_CONFIG}:/config
-    env_file:
-      - ../../Secrets/.env
 
   Galactic-Sonarr:
     image: linuxserver/sonarr
@@ -75,8 +67,6 @@ services:
       - ${MEDIA_VOLUME_2}:/media2
       - ${DOWNLOADS}:/downloads
       - ${TORRENT_COMPLETE}:/complete
-    env_file:
-      - ../../Secrets/.env
 
   Galactic-Radarr:
     image: linuxserver/radarr
@@ -92,8 +82,6 @@ services:
       - ${MEDIA_VOLUME_2}:/media2
       - ${DOWNLOADS}:/downloads
       - ${TORRENT_COMPLETE}:/complete
-    env_file:
-      - ../../Secrets/.env
 
   Galactic-Overseerr:
     image: linuxserver/overseerr:latest
@@ -106,8 +94,6 @@ services:
     volumes:
       - /home/globalentry/Config/Overseerr:/config
     restart: unless-stopped
-    env_file:
-      - ../../Secrets/.env
 
   Galactic-Tdarr:
     image: haveagitgat/tdarr
@@ -134,8 +120,6 @@ services:
           - driver: nvidia
             capabilities: [gpu]
             device_ids: ['02:00.0']
-    env_file:
-      - ../../Secrets/.env
 
   Galactic-Plex:
     image: linuxserver/plex
@@ -159,8 +143,6 @@ services:
           - driver: nvidia
             capabilities: [gpu]
             device_ids: ['02:00.0']
-    env_file:
-      - ../../Secrets/.env
 
   Galactic-Membarr:
     image: yoruio/membarr
@@ -172,8 +154,6 @@ services:
     volumes:
       - ${MEMBARR_CONFIG}:/app/app/config
     restart: unless-stopped
-    env_file:
-      - ../../Secrets/.env
 
   openproject:
     image: openproject/community:13.0.7
@@ -191,8 +171,6 @@ services:
     ports:
       - "${OPENPROJECT_PORT}:80"
     restart: unless-stopped
-    env_file:
-      - ../../Secrets/.env
 
   db:
     image: postgres:10
@@ -205,8 +183,6 @@ services:
     volumes:
       - ${DB_DATA}:/var/lib/postgresql/data
     restart: unless-stopped
-    env_file:
-      - ../../Secrets/.env
 
   watchtower:
     image: containrrr/watchtower
@@ -214,5 +190,3 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     restart: unless-stopped
-    env_file:
-      - ../../Secrets/.env

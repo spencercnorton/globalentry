@@ -132,6 +132,7 @@ services:
       - ${MEDIA_DIR_1}:/media1
       - ${MEDIA_DIR_2}:/media2
       - ${PLEX_TRANS}:/transcode
+      - ${CACHE}:/cache
     restart: unless-stopped
 
   Galactic-Membarr:

@@ -22,7 +22,6 @@ services:
       - GUACD_HOSTNAME=guacd
       - GUACD_PORT=4822
       - MYSQL_HOSTNAME=mysql
-    # - MYSQL_PORT=3306 # Uncomment this if using a custom MySQL port
     ports:
       - "8080:8080"
 

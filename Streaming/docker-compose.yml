@@ -97,7 +97,7 @@ services:
 
   Galactic-Tdarr:
     image: haveagitgat/tdarr
-    runtime: nvidia
+   # runtime: nvidia
     container_name: Galactic-Tdarr
     network_mode: host
     environment:
@@ -117,7 +117,7 @@ services:
 
   Galactic-Plex:
     image: linuxserver/plex
-    runtime: nvidia
+   # runtime: nvidia
     container_name: Galactic-Plex
     network_mode: host
     environment:
@@ -125,8 +125,8 @@ services:
       - PGID=${PGID}
       - TZ=${TIMEZONE}
       - TOKEN=${PLEX_CLAIM_TOKEN}
-      - NVIDIA_VISIBLE_DEVICES=all
-      - NVIDIA_DRIVER_CAPABILITIES=compute,video,utility
+    #  - NVIDIA_VISIBLE_DEVICES=all
+    #  - NVIDIA_DRIVER_CAPABILITIES=compute,video,utility
     volumes:
       - ${PLEX_CONFIG}:/config
       - ${MEDIA_DIR_1}:/media1

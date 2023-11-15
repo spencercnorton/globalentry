@@ -23,8 +23,7 @@ services:
       - TZ=${TIMEZONE}
     volumes:
       - ${BAZARR_CONFIG}:/config
-      - ${MEDIA_DIR_1}:/media1
-      - ${MEDIA_DIR_2}:/media2
+      - ${MEDIA_DIR_1}:/titan
       - ${DOWNLOADS}:/downloads
       - ${TORRENT_COMPLETE}:/complete
     restart: unless-stopped
@@ -63,8 +62,7 @@ services:
       - TZ=${TIMEZONE}
     volumes:
       - ${SONARR_CONFIG}:/config
-      - ${MEDIA_VOLUME_1}:/media1
-      - ${MEDIA_VOLUME_2}:/media2
+      - ${MEDIA_VOLUME_1}:/titan
       - ${DOWNLOADS}:/downloads
       - ${TORRENT_COMPLETE}:/complete
 
@@ -78,8 +76,7 @@ services:
       - TZ=${TIMEZONE}
     volumes:
       - ${RADARR_CONFIG}:/config
-      - ${MEDIA_VOLUME_1}:/media1
-      - ${MEDIA_VOLUME_2}:/media2
+      - ${MEDIA_VOLUME_1}:/titan
       - ${DOWNLOADS}:/downloads
       - ${TORRENT_COMPLETE}:/complete
 
@@ -110,8 +107,7 @@ services:
     volumes:
       - ${TDARR_CONFIGS}:/app/configs
       - ${TDARR_SERVER}:/app/server
-      - ${MEDIA_VOLUME_1}:/media
-      - ${MEDIA_VOLUME_2}:/media2
+      - ${MEDIA_VOLUME_1}:/titan
       - ${TDARR_CACHE}:/temp
     restart: unless-stopped
 
@@ -129,8 +125,7 @@ services:
     #  - NVIDIA_DRIVER_CAPABILITIES=compute,video,utility
     volumes:
       - ${PLEX_CONFIG}:/config
-      - ${MEDIA_DIR_1}:/media1
-      - ${MEDIA_DIR_2}:/media2
+      - ${MEDIA_DIR_1}:/titan
       - ${PLEX_TRANS}:/transcode
       - ${CACHE}:/cache
     restart: unless-stopped

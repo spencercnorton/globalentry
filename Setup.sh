@@ -13,16 +13,6 @@ sudo apt-get install -y ubuntu-desktop
 echo "Installing TigerVNC Server..."
 sudo apt-get install -y tigervnc-standalone-server tigervnc-common
 
-# Install and configure Guacamole
-echo "Installing Guacamole..."
-sudo apt-get install -y guacamole guacd libguac-client-vnc libguac-client-ssh libguac-client-rdp
-sudo systemctl enable --now guacd
-
-# Configure Guacamole
-# Note: You will need to manually configure Guacamole according to your needs.
-# This typically involves editing /etc/guacamole/guacamole.properties
-# and setting up connections in /etc/guacamole/user-mapping.xml
-
 # Install other tools and utilities
 echo "Installing other necessary tools..."
 sudo apt-get install -y curl nano htop net-tools
@@ -89,6 +79,5 @@ echo "Please configure Samba by editing the smb.conf file:"
 echo "sudo nano /etc/samba/smb.conf"
 echo "And restart the service: sudo systemctl restart smbd"
 echo "Please configure VNC Server by running 'vncserver' to set up your user's VNC password."
-echo "Please configure Guacamole by editing /etc/guacamole/guacamole.properties and setting up connections in /etc/guacamole/user-mapping.xml."
 
 # End of the script

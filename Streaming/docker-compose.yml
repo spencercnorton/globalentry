@@ -89,12 +89,12 @@ services:
       - PGID=1000
       - TZ=America/Denver
     volumes:
-      - /home/globalentry/Config/Overseerr:/config
+      - ${OVERSEER_CONFIG}:/config
     restart: unless-stopped
 
   Galactic-Tdarr:
     image: haveagitgat/tdarr
-   # runtime: nvidia
+    runtime: nvidia
     container_name: Galactic-Tdarr
     network_mode: host
     environment:
@@ -111,24 +111,24 @@ services:
       - ${TDARR_CACHE}:/temp
     restart: unless-stopped
 
-  Galactic-Plex:
-    image: linuxserver/plex
-   # runtime: nvidia
-    container_name: Galactic-Plex
-    network_mode: host
-    environment:
-      - PUID=${PUID}
-      - PGID=${PGID}
-      - TZ=${TIMEZONE}
-      - TOKEN=${PLEX_CLAIM_TOKEN}
-    #  - NVIDIA_VISIBLE_DEVICES=all
-    #  - NVIDIA_DRIVER_CAPABILITIES=compute,video,utility
-    volumes:
-      - ${PLEX_CONFIG}:/config
-      - ${MEDIA_VOLUME_1}:/files
-      - ${PLEX_TRANS}:/transcode
-      - ${CACHE}:/cache
-    restart: unless-stopped
+  #Galactic-Plex:
+  #  image: linuxserver/plex
+  #  runtime: nvidia
+  #  container_name: Galactic-Plex
+  #  network_mode: host
+  #  environment:
+  #    - PUID=${PUID}
+  #    - PGID=${PGID}
+  #    - TZ=${TIMEZONE}
+  #    - TOKEN=${PLEX_CLAIM_TOKEN}
+  #    - NVIDIA_VISIBLE_DEVICES=all
+  #    - NVIDIA_DRIVER_CAPABILITIES=compute,video,utility
+  #  volumes:
+  #    - ${PLEX_CONFIG}:/config
+  #    - ${MEDIA_VOLUME_1}:/files
+  #    - ${PLEX_TRANS}:/transcode
+  #    - ${CACHE}:/cache
+  #  restart: unless-stopped
 
   Galactic-Membarr:
     image: yoruio/membarr

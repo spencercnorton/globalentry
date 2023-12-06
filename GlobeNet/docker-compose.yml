@@ -41,6 +41,8 @@ services:
       - NETWORK=${NORDNET1_NETWORK}
       - TECHNOLOGY=${NORDNET1_TECHNOLOGY}
       - CONNECT=${NORDNET1_CONNECT}
+      - PUID=${PUID}
+      - PGID=${PGID}
     restart: unless-stopped
 
   NordNet-2:
@@ -81,6 +83,8 @@ services:
       - NETWORK=${NORDNET2_NETWORK}
       - TECHNOLOGY=${NORDNET2_TECHNOLOGY}
       - CONNECT=${NORDNET2_CONNECT}
+      - PUID=${PUID}
+      - PGID=${PGID}
     restart: unless-stopped
 
   NordNet-3:
@@ -120,6 +124,8 @@ services:
       - NETWORK=${NORDNET3_NETWORK}
       - TECHNOLOGY=${NORDNET3_TECHNOLOGY}
       - CONNECT=${NORDNET3_CONNECT}
+      - PUID=${PUID}
+      - PGID=${PGID}
     restart: unless-stopped
 
   Galactic-Tor:

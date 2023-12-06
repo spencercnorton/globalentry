@@ -140,35 +140,6 @@ services:
       - ${MEMBARR_CONFIG}:/app/app/config
     restart: unless-stopped
 
-  openproject:
-    image: openproject/community:13.0.7
-    container_name: Galactic-OpenProject
-    volumes:
-      - ${OPENPROJECT_PGDATA}:/var/openproject/pgdata
-      - ${OPENPROJECT_STATIC}:/var/openproject/assets
-    environment:
-      - SECRET_KEY_BASE=${OPENPROJECT_SECRET_KEY_BASE}
-      - DATABASE_URL=postgres://${DB_USER}:${DB_PASS}@db/${DB_NAME}?encoding=utf8&pool=5&timeout=5000
-      - PGID=${PGID}
-      - PUID=${PUID}
-    depends_on:
-      - db
-    ports:
-      - "${OPENPROJECT_PORT}:80"
-    restart: unless-stopped
-
-  db:
-    image: postgres:10
-    environment:
-      - POSTGRES_USER=${DB_USER}
-      - POSTGRES_PASSWORD=${DB_PASS}
-      - POSTGRES_DB=${DB_NAME}
-      - PGID=${PGID}
-      - PUID=${PUID}
-    volumes:
-      - ${DB_DATA}:/var/lib/postgresql/data
-    restart: unless-stopped
-
   watchtower:
     image: containrrr/watchtower
     container_name: watchtower

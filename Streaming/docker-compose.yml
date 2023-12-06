@@ -129,17 +129,6 @@ services:
   #    - ${CACHE}:/cache
   #  restart: unless-stopped
 
-  Galactic-Membarr:
-    image: yoruio/membarr
-    container_name: Galactic-Membarr
-    network_mode: "container:NordNet-3"
-    environment:
-      - TOKEN=${MEMBARR_TOKEN}
-      - TZ=${TIMEZONE}
-    volumes:
-      - ${MEMBARR_CONFIG}:/app/app/config
-    restart: unless-stopped
-
   watchtower:
     image: containrrr/watchtower
     container_name: watchtower

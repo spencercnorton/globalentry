@@ -94,7 +94,6 @@ services:
 
   Galactic-Tdarr:
     image: haveagitgat/tdarr
-    runtime: nvidia
     container_name: Galactic-Tdarr
     network_mode: host
     environment:

@@ -1,42 +1,6 @@
 version: '3'
 # Docker Compose for GlobalEntry Network Infrastructure
 services:
-  guacd:
-    image: guacamole/guacd
-    container_name: Galactic-GuacD
-    restart: always
-    ports:
-      - "4822:4822"
-
-  guacamole:
-    image: guacamole/guacamole
-    container_name: Galactic-Guacamole
-    restart: always
-    depends_on:
-      - guacd
-      - mysql
-    environment:
-      - MYSQL_DATABASE=guacamole_db
-      - MYSQL_USER=${GUAC_USERNAME}
-      - MYSQL_PASSWORD=${GUAC_PASSWORD}
-      - GUACD_HOSTNAME=guacd
-      - GUACD_PORT=4822
-      - MYSQL_HOSTNAME=mysql
-    ports:
-      - "8080:8080"
-
-  mysql:
-    image: mysql:5.7
-    container_name: mysql
-    restart: always
-    environment:
-      - MYSQL_ROOT_PASSWORD=${GUAC_PASSWORD}
-      - MYSQL_DATABASE=guacamole_db
-      - MYSQL_USER=${GUAC_USERNAME}
-      - MYSQL_PASSWORD=${GUAC_PASSWORD}
-    volumes:
-      - ${GUAC_DATABASE}:/var/lib/mysql
-      - ./initdb.sql:/docker-entrypoint-initdb.d/initdb.sql
 
   NordNet-1:
     image: ghcr.io/bubuntux/nordvpn
